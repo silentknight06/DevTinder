@@ -1,15 +1,18 @@
 const express = require("express");
 const app = express();
-app.use("/",(req, resp)=>{
+app.get("/user",(req, resp)=>{
      resp.send("this server created by deepak kumar")
 });
-app.get("/hello", (req, resp)=>{
+app.post("/user", (req, resp)=>{
     resp.send("hey i am hello...")
 });
-app.get("/deepak", (req, resp)=>{
+app.delete("/user", (req, resp)=>{
+    resp.send("hey this is /deepak servet")
+});
+app.use("/user", (req, resp)=>{
     resp.send("hey this is /deepak servet")
 });
 
-app.listen(3000,()=>{
+app.listen(3000,()=>{  
     console.log("server is runing...")
 });
