@@ -172,7 +172,31 @@ app.use(express.json());
     }
   })
 
+  // Deleete the user 
+  app.delete("/user", async(req, resp)=>{
+    const userId = req.body.userId;
+    try{
+       const user =  await User.findByIdAndDelete(userId);
+       resp.send("User Deelted succesfully..");
+    }
+    catch(err){
+        resp.status(400).send('user not deleted');
+    }
+  })
 
+  // Update the Data into Database;
+  app.patch("/user", async(req, resp)=>{
+    const userId = req.body.userId;
+    const data = req.body;
+    try{
+     const user = await User.findByIdAndUpdate({_id: userId}, data);
+     console.log(user);
+     resp.send("user updated sucesfully...");
+    }
+    catch(err){
+        resp.status(400).send("data caont be updated")
+    }
+  })
 
  connectDB()
  .then(()=>{
