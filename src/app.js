@@ -185,18 +185,33 @@ app.use(express.json());
   })
 
   // Update the Data into Database;
-  app.patch("/user", async(req, resp)=>{
-    const userId = req.body.userId;
+  app.patch("/user/:userId", async(req, resp)=>{
+    const userId = req.params?.userId;
     const data = req.body;
+   
     try{
+     const ALLOWED_UPDATES = [
+                "photoUrl","about", "gender", "age", "skills",
+          ];
+    const isUpdateAllowed = Object.keys(data).every((k)=>
+        ALLOWED_UPDATES.includes(k)
+          );
+     if(!isUpdateAllowed){
+        throw new Error("updated not Allowed");
+     }
+
+     if(data?.skills.length>10){
+        throw new error("skills length is more then required");
+     }
      const user = await User.findByIdAndUpdate({_id: userId}, data,{
         returnDocument:"after",
         runValidators:true,
      });
+     console.log(user);
      resp.send("user updated sucesfully...");
     }
     catch(err){
-        resp.status(400).send("data caont be updated")
+        resp.status(400).send("data caont be updated (catch)" + err.message)
     }
   })
 
