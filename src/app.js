@@ -154,6 +154,26 @@ const bcrypt = require("bcrypt");
     }
   });
 
+  //For the Login
+  app.post("/login", async(req, resp)=>{
+    try{
+         const {emailId, password} = req.body;
+         const user = await User.findOne({emailId: emailId});
+         if(!user){
+            throw new Error("User is not valid");
+         }
+         const isPasswordValid = await bcrypt.compare(password, user.password);
+         if(isPasswordValid){
+            resp.send("login succsfully");
+         }else{
+              throw new Error("User is not correct");
+         }
+        }
+    catch (err){
+        resp.status(400).send("Err : "+ err.message);
+    }
+  } )
+
   // find data with help email
   app.get("/user", async(req, resp)=>{
     const userEmail = req.body.emailId;
