@@ -189,8 +189,10 @@ app.use(express.json());
     const userId = req.body.userId;
     const data = req.body;
     try{
-     const user = await User.findByIdAndUpdate({_id: userId}, data);
-     console.log(user);
+     const user = await User.findByIdAndUpdate({_id: userId}, data,{
+        returnDocument:"after",
+        runValidators:true,
+     });
      resp.send("user updated sucesfully...");
     }
     catch(err){
