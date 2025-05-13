@@ -53,8 +53,9 @@ const jwt = require("jsonwebtoken");
     }
   } )
 
-authRouter.get("/logout", async(req, resp)=>{
-   resp.cookies("token", null, {expires:new Date(Date.now())});
+authRouter.post("/logout", async(req, resp)=>{
+   resp.cookie("token", null, {
+      expires:new Date(Date.now())});
    resp.send("log out succesfully");
 })
 
