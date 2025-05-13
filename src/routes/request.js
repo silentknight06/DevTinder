@@ -5,6 +5,7 @@ const User  = require("../models/user.js")
 const ConnectionRequest = require("../models/connectionRequest.js");
 // const user = require("../models/user.js");
 
+// sent(interested/ignored) the connectioin request
 requestRouter.post("/request/send/:status/:toUserId", userAuth, async(req, resp)=>{
 try{
 
@@ -55,4 +56,37 @@ catch (err){
 
   })
 
+  //(accept/reject) the connection request
+ requestRouter.post("/request/review/:status/:requestId", userAuth, async(req, resp)=>{
+    // validate the status,
+    // deepak send the request to  ->  Praveen
+    //logidin user should be praveen (tabhi toh accept )  karenge 
+    // status should be interesteed 
+    // request Id Should be valid
+
+    try{
+        const loggedinInUser = req.user;
+        const {status, requestId} = req.params;
+        const allowedStatus = ["accepted", "rejected"];
+        if(!allowedStatus.includes(status)){
+            return resp.status(400).json({ message : "status not allowed!"});
+        }
+        const connectionRequest = await ConnectionRequest.findOne({
+            _id: requestId,
+            toUserId: loggedinInUser._id,
+            status:"interested",
+        });
+
+        if(!connectionRequest){
+            return resp.status(404).json({message: "connection request is not found"})
+        }
+
+        connectionRequest.status = status;
+        const data = await connectionRequest.save();
+        resp.json({message: "conenction request" + status, data});
+    }
+    catch(err){
+        resp.status(400).send("ERROR : " + err.message);
+    }
+  })
 module.exports = requestRouter;
