@@ -43,7 +43,7 @@ const jwt = require("jsonwebtoken");
             expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
            });
 
-            resp.send("login succsfully");
+            resp.send(user);
          }else{
               throw new Error("User is not correct");
          }
