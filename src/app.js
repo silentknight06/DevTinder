@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 
 const express = require("express");
 const app = express();
@@ -26,9 +26,9 @@ app.use("/", userRouter);
 
  connectDB()
  .then(()=>{
-    console.log("Db Connected Sussesfully 😁");
+    console.log("Db Connected Sussesfully");
     app.listen(3000, ()=>{
-        console.log("app is listeingn is 300000")
+        console.log("app is listeingn on 3000")
     })
  })
     
