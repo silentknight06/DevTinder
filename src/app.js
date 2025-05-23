@@ -14,7 +14,7 @@ app.use(cookieParser());
 //   credentials: true,
 // }));
 app.use(cors({
-  origin: "https://your-frontend.onrender.com", 
+  origin: "https://dev-tinder-front-end-git-main-deeapks-projects.vercel.app", 
   credentials: true
 }));
 
