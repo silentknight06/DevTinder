@@ -7,12 +7,17 @@ app.use(express.json());
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
 app.use(cookieParser());
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     callback(null, origin); // reflect the request origin
+//   },
+//   credentials: true,
+// }));
 app.use(cors({
-  origin: (origin, callback) => {
-    callback(null, origin); // reflect the request origin
-  },
-  credentials: true,
+  origin: "https://your-frontend.onrender.com", 
+  credentials: true
 }));
+
 
 const authRouter = require("./routes/auth.js");
 const profileRouter = require("./routes/profile.js");
