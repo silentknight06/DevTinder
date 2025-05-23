@@ -28,6 +28,8 @@ authRouter.post("/signup", async (req, resp) => {
 
     resp.cookie("token", token, {
       expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+      secure:true,
+      sameSite:"none",
     });
 
     resp.json({ message: "added succesfully", data: saveUser });
